@@ -59,12 +59,9 @@ public class TicTacToeController {
     }
 
 
+    public void undo(TicTacToe ticTacToe, int row, int col) {
+        System.out.println("Undoing the move.");
+        ticTacToe.undo(row,col);
 
-
-
-
-
-
-
-
+    }
 }

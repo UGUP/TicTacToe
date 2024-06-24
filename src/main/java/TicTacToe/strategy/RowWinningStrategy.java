@@ -1,6 +1,7 @@
 package main.java.TicTacToe.strategy;
 
 import main.java.TicTacToe.model.Board;
+import main.java.TicTacToe.model.Cell;
 import main.java.TicTacToe.model.Move;
 
 import java.util.HashMap;
@@ -22,6 +23,21 @@ public class RowWinningStrategy implements WinningStrategy{
 
          }
          rowMaps.get(currentRow).put(currentSymbol,rowMaps.get(currentRow).get(currentSymbol)+1);
-         return  rowMaps.get(currentRow).get(currentSymbol).equals(board.getDimension());
+        return  rowMaps.get(currentRow).get(currentSymbol).equals(board.getDimension());
+    }
+
+    @Override
+    public void remove(Cell cell,Board board) {
+        int row= cell.getRow();
+        if(rowMaps.containsKey(row)){
+            char currentChar= cell.getPlayer().getSymbol().getCharacter();
+            HashMap<Character,Integer> rowmap= rowMaps.get(row);
+            int value= rowmap.get(currentChar)-1;
+            if(value==0){
+                rowMaps.remove(rowMaps.get(row));
+            }else{
+                rowmap.put(currentChar,rowmap.get(currentChar)-1);
+            }
+        }
     }
 }

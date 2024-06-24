@@ -29,6 +29,7 @@ public class Main {
 
         try{
         while(controller.getState().equals(TicTacToeState.INPROGRES)){
+            System.out.println("Printing the Board \n");
             controller.printBoard(ticTacToe);
             Player lastPlayer= players.peek();
             System.out.println(" the type of player is "+lastPlayer.getPlayerType());
@@ -41,7 +42,21 @@ public class Main {
                 System.out.println("Enter the column");
                 col= sc.nextInt();
             }
+
             controller.makeMove(ticTacToe,lastPlayer,row,col);
+            System.out.println();
+            controller.printBoard(ticTacToe);
+
+            if(lastPlayer.getPlayerType().equals(PlayerType.HUMAN)){
+                System.out.println("Do you want to undo your move y/n");
+                String input= sc.next();
+                if(input.equalsIgnoreCase("y")){
+                    controller.undo(ticTacToe,row,col);
+                    System.out.println(" The board after undo ..................\n ");
+                    controller.printBoard(ticTacToe);
+                    players.add(players.poll());
+                }
+            }
 
             if(controller.getState().equals(TicTacToeState.DRAW)){
                 controller.setState(TicTacToeState.DRAW);

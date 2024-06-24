@@ -5,6 +5,7 @@ import main.java.TicTacToe.strategy.BotPlayingStrategy;
 import main.java.TicTacToe.strategy.WinningStrategy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.concurrent.RecursiveTask;
 
@@ -106,6 +107,25 @@ public class TicTacToe {
             }
         }
         return false;
+    }
+
+    public void undo(int row, int col) {
+        //Removing the last from the moves list;
+        moves.remove(moves.get(moves.size()-1));
+
+        // Resetting the board ,cell and teh player
+        Cell cell = board.getBoard().get(row).get(col);
+        undoMoveFromHashMap(cell,board);
+        cell.setCellState(CellState.EMPTY);
+        cell.setPlayer(null);
+
+    }
+
+    public void undoMoveFromHashMap(Cell cell,Board board){
+        for (WinningStrategy strategy:winningStrategy){
+            strategy.remove(cell,board);
+        }
+
     }
 
     public static class BuilderHelpper{
